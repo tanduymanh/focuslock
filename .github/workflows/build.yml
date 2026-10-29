@@ -1,4 +1,4 @@
-name: Build APK
+ name: Build APK
 on:
   push:
   workflow_dispatch:
@@ -7,7 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: unzip -q FocusLock-v3.zip
+      - name: Giải nén bản mới nhất
+        run: |
+          Z=$(ls FocusLock-v*.zip | sort -V | tail -1)
+          echo "Dùng $Z"
+          unzip -q -o "$Z"
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
